@@ -1,4 +1,8 @@
 今儿的任务主要就是要刷一些题
 
 24. Swap nodes in pairs
+这里面涉及到一个比较tricky的一个操作，那就是pre.next = self.swapPairs(next)递归的方法
+递归是需要明确循环体，以及结束条件的，这个在今后的刷题中应该要多多练习
 
+
+19. Remove Nth Node from End of List
