@@ -1,1 +1,39 @@
+Part2的话一般就是一些leetcode题目了
 
+150. Evaluate Reverse Polish Notation
+逆波兰表达式，确实是第一次听到这个说法，感觉很有趣。
+查看chatGpt后得知，这种表示方法非常适合堆栈计算，用来作为一些计算器的设计（以前的一些非科学计算的计算器可能就是这种算法）
+而且这种表达方式是不用care运算优先度的。
+看到题目的第一想法是受阻的，学习一下题解的思路。
+看懂了逆波兰表达式的算法后也是比较简单的：
+  碰到数字，就压入栈
+  碰到运算符，就用栈顶的前两个数字进行运算，把结果压入栈顶
+
+from operator import add, sub, mul
+
+def div(x, y):
+    return int(x/y) if x*y>0 else -(abs(x) // abs(y))
+
+class Solution:
+    op_map = {'+': add, '-': sub, '*': mul, '/': div}
+
+    def evalRPN(self, tokens: List[str]) -> int:
+        stack = []
+        for token in tokens:
+            if token not in {'+', '-', '*', '/'}:
+                stack.append(int(token))
+            else:
+                op2 = stack.pop()
+                op1 = stack.pop()
+                stack.append(self.op_map[token](op1, op2))
+        return stack.pop()
+
+这个代码有一些细节是值得分析一波的：
+from operator import add, sub, mul
+python是有现成的运算符的，为什么还要import这些运算符呢？这是因为要把这些基础运算改为函数的形式，这样的话更加容易地调用，就跟函数一样
+
+然后是专门定义的div：因为python中的//默认是向负无穷大取整，对于结果是正数的话还好说，但是如果结果为负数的话，就不对了，因此需要专门定义一个div出来
+
+然后是这个op_map字典的定义：将数学符号和函数名对应起来，这样在检测到数学符号的时候，可以用函数符号的形式进行函数调用，这一步真的很妙，函数调用的思想值得学习
+
+239: Slinding Window Maximum
