@@ -41,3 +41,68 @@ C++中的map，set，multimap，multiset的底层实现都是平衡二叉搜索�
 深度优先用栈来实现，广度优先用队列来实现
 
 *二叉树的递归遍历
+递归，需要方法论。主要用于前中后序的遍历
+递归的三要素：
+  1. 确定递归函数的参数和返回值
+  2. 确定终止条件
+  3. 确定单层递归的逻辑
+
+这里面有三道题，分别对应的前中后序遍历，在题目中来感受一下算法：
+144 Binary tree preorder traversal二叉树的前序遍历
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+
+        def dfs(node):
+            if node is None:
+                return
+            
+            res.append(node.val)
+            dfs(node.left)
+            dfs(node.right)
+        dfs(root)
+        return res
+跟着这个代码，看看三要素：
+1. 确定递归函数的参数和返回值。递归函数需要用res来记录遍历到的节点值，所以需要返回这个list。然后递归函数的参数需要是节点，不需要别的参数了。res是一个全局变量，不用传递
+2. 确定终止条件：如果遇到null节点，那么就返回
+3。 确定单层递归的逻辑：将root的值记录，然后遍历左节点，然后遍历右节点
+
+94. binary tree inorder traversal 中序遍历
+这个跟前面的题类似，需要注意的是，中间节点就是直接append，左右节点是需要递归的
+145. binary tree postorder traversal 后序遍历
+
+二叉树的迭代遍历
+迭代遍历是非递归的
+栈可以实现二叉树的前后中序遍历
+
+前序遍历
+迭代的实现，其实画画图就明白了
+中序遍历
+其实迭代算法的话，可以画一个二层的满二叉树来验证一下逻辑。但是如何处理边界情况，仍然是个很需要能力的事情。
+后续遍历
+画图的话其实非常好理解，但是很难直接想到这种算法
+
+二叉树的统一迭代法：
+之前的迭代的实现，遍历顺序不一样，迭代的写法是不一样，这个部分主要就是做一个统一的迭代法
+标记法：就是要处理的节点放入栈之后，紧接着放入一个空指针作为标记
+整体的算法比较麻烦，算是学了一些基础知识了
+
+层序遍历
+好像很简单的样子。
+从左到右一层一层的去遍历二叉树
+需要借助队列来实现。队列先进先出，符合一层一层遍历的逻辑。而栈先进后出适合模拟深度优先遍历
+
+102. Binary tree level order traversal
+画图的话，这个题还不算难。就是第一思路没想清楚队列和广度优先算法的关系
+
+107. binary tree level order traversal 2
+从下往上遍历，其实就是把上一题的结果反转一次就行了
+
+199. Binary tree right side view
+加了个判断看看是不是到了level的最右侧
+
+429. N-ary Tree level order traversal
+一个节点有多个孩子
+for child in node.children:
+
+今儿的题太多了，简单刷了几道，思路大差不差，先这样吧
